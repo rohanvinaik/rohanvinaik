@@ -91,4 +91,4 @@ Three questions. One thread: **if you can't explain it, you can't trust it.**
 
 ---
 
-<sub>Working on interpretable AI, verification, or alignment? Let's talk → [Website](RohanV.Me) · [contact](rohanpvinaik@gmail.com) · >
+<sub>Working on interpretable AI, verification, or alignment? Let's talk → [Website](https://RohanV.Me) · [Contact](mailto:rohanpvinaik@gmail.com)
