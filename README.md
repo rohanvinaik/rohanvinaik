@@ -1,85 +1,95 @@
 # Rohan Vinaik
 
-If you've ever wondered why proving a theorem in Lean requires 671B parameters and a datacenter — or tried to find the right model on HuggingFace and given up — or asked how many tests it actually takes to fully specify a program — you're in the right place.
+If you've ever wondered why proving a theorem in Lean requires 671B parameters and a datacenter — or asked how many tests it actually takes to pin down what a program does — you're in the right place.
 
-I build systems where structure does the work that scale usually gets credit for. Same principle across domains: find the geometry, navigate it, let cheap search handle the rest.
+I build deterministic systems that show their work: a verifier that proves a refactor changed nothing, a prover that navigates instead of predicts, and measurement instruments that abstain instead of guess. Everything runs on consumer hardware, the load-bearing claims are machine-checked in Lean 4, and every repo has a section that says where it stops. That last part is on purpose.
 
-<p align="center">
-  <img src="research_pipeline.svg" alt="One thesis, four domains: ModelAtlas (ML Models), Wayfinder (Proofs), LintGate (Code), Wesker (Mutations)" width="650"/>
-</p>
+`deterministic · warrant-carrying · Lean-checked where it counts · laptop-scale`
 
 ---
 
-## The Research Arc
+## Use one today
 
-This started with a simple question: *how do you verify what a model IS when you can't see the weights?*
-
-That led to behavioral fingerprinting. Which led to semantic grounding. Which led to a broader realization: the geometric navigation approach that worked for model verification kept working — for ML model search, formal theorem proving, code specification, and mutation testing.
-
-One paradigm. Four systems:
+| | | |
+|:---|:---|:---|
+| [**Detective**](https://github.com/rohanvinaik/Detective) | `uv add detective-spec` | Refactor a Python function — or let a model rewrite it — and prove the behavior didn't change. |
+| [**Wesker**](https://github.com/rohanvinaik/Wesker) | `pip install wesker` | Mutation testing that counts the behavioral questions your tests leave open — one mutant per question, zero dependencies. |
+| [**Prism**](https://github.com/rohanvinaik/Prism) | `uv tool install prism-mcp` | Every Claude Code session writes down exactly what it did. Prism is the part that reads it back. |
 
 ---
 
-## What I've Built
+## The claim, in one function
+
+`assert add(1, 1) == 2` passes — and so does `3*a - b`, and so does `a*b + 1`, and so do infinitely many functions that are not addition. A green suite proves your code was right once, not that it's pinned. Closing that gap turns out to be a computable problem, and the number of tests it takes — the specification complexity σ — is the same quantity five fields discovered independently: teaching dimension, exact-learning query complexity, identity testing, local testability, certificate size. That identification, and the dynamics that follow from it, are formalized in Lean 4. Everything below hangs on that thread.
+
+## The map
+
+**Specification — green is not proof.**
 
 | | |
 |:---|:---|
-| [**ModelAtlas**](https://github.com/rohanvinaik/ModelAtlas) | Google for open-source AI models. 29,657 models, 166 semantic anchors, <100ms queries, no GPU. HuggingFace has 800K models and no way to search by meaning — so I built a coordinate system. |
-| [**Wayfinder**](https://github.com/rohanvinaik/Wayfinder) | Proof compiler for Lean 4. 63% of a 2,000-theorem random Mathlib sample in one pass on commodity hardware, using a 22M-parameter encoder. 28% requires no trained model at all. On MiniF2F-test, 6 of 15 AIME problems — matching DeepSeek-Prover-V2 (671B parameters, datacenter) on a laptop. Infrastructure that amplifies every downstream prover — not a competing model. |
-| [**LintGate**](https://github.com/rohanvinaik/LintGate) | Specification compiler. MC/DC verification-capable — achieved 100% mutation kill rate on a 30K-model codebase. Debugging drops to zero under supervision. The question it answers: *how many tests does it take to fully specify a program?* |
-| [**Wesker**](https://github.com/rohanvinaik/Wesker) | In-process AST mutation testing for Python. 100–500x faster than mutmut or cosmic-ray. Zero dependencies. ~1,770 lines. Mutation testing has been "too expensive to use" for 48 years — Wesker restructures the computation. |
+| [Wesker](https://github.com/rohanvinaik/Wesker) | In-process AST mutation testing; the greedy (1−1/e) selection bound machine-checked in Lean against Mathlib. |
+| [Detective](https://github.com/rohanvinaik/Detective) | Mutation-complete suites as behavioral contracts. Applies nothing it cannot prove. |
+| [Uroboros](https://github.com/rohanvinaik/Uroboros) | The same loop run unattended across a whole repository — CPU-only, the model never drives. |
+| [LintGate](https://github.com/rohanvinaik/LintGate) | The research workbench where σ was born: specification measurement, decomposition prescriptions, the theory. |
 
-Same principle. Consumer hardware. Biochemist by training, self-taught in formal methods.
+**Navigation — structure does the work that scale gets credit for.**
+
+| | |
+|:---|:---|
+| [ModelAtlas](https://github.com/rohanvinaik/ModelAtlas) | ~50K HuggingFace models as coordinates in a signed 8-bank space. Search by meaning — under 100 ms, no embeddings, no GPU. |
+| [Wayfinder](https://github.com/rohanvinaik/Wayfinder) | Lean 4 proof search as navigation: 1,277 of a frozen 2,000-theorem Mathlib split, raw, one neural pass per proof state. |
+| [GenomeVault](https://github.com/rohanvinaik/GenomeVault) | A genome read as Z₂ × Z₂ — balanced ternary — so privacy, security, and utility stop trading against each other. |
+
+**Instruments — measurement that shows its work.**
+
+| | |
+|:---|:---|
+| [MeasuringAGI](https://github.com/rohanvinaik/MeasuringAGI) | A 12-dimensional metacognitive fingerprint that resolves models accuracy benchmarks call identical. 33 frontier LLMs mapped. |
+| [TriageGeist](https://github.com/rohanvinaik/triagegeist) | Auditable emergency triage: 99.86% of decisions with zero LLM in the path; the rest typed and certified. |
+| [Peitho](https://github.com/rohanvinaik/Peitho) | A retail decision engine in pure Python — zero runtime dependencies, a reason on every line, every decision mutation-pinned. |
+| [Yami](https://github.com/rohanvinaik/Yami) | A chess game read as a story — recognition instead of tree search, every rule one a human could state. |
+| [Ephemeris](https://github.com/rohanvinaik/Ephemeris) · [Ansatz](https://github.com/rohanvinaik/Ansatz) | Certified surrogates for chaotic systems: the output carries a certificate on the shape of its own error — and a method for minting more. |
 
 ---
 
 <details>
-<summary><b>Earlier Work</b></summary>
+<summary><b>Foundations & record (2025 – early 2026)</b></summary>
 <br/>
 
-The flagship projects grew out of three research threads:
-
-**Verification** — Can we identify a model through behavior alone?
+**Behavioral model identity** — the question that started all of this: what a model *is* when you can't see the weights.
 
 | | |
 |:---|:---|
-| [PoT_Experiments](https://github.com/rohanvinaik/PoT_Experiments) | Cryptographic model identity via behavioral fingerprints. 90.9% accuracy distinguishing base models from fine-tuned variants — on a consumer Mac, for ~$0.50 of electricity. |
-| [REV](https://github.com/rohanvinaik/REV) | Neural networks have "restriction sites" — layer boundaries where behavioral variance spikes. Target these to verify 70B models in 3–4GB of memory. |
-| [HBT_Validator](https://github.com/rohanvinaik/HBT_Validator) | Hyperdimensional fingerprints that capture architectural lineage. Detects if a model was distilled, fine-tuned, or family-related — without weight access. |
+| [PoT_Experiments](https://github.com/rohanvinaik/PoT_Experiments) | Cryptographically pre-committed behavioral challenges; model identity on a consumer Mac. |
+| [REV](https://github.com/rohanvinaik/REV) | Restriction sites: layer boundaries where behavioral variance spikes, verified in a fraction of the memory. |
+| [HBT_Validator](https://github.com/rohanvinaik/HBT_Validator) | Hyperdimensional fingerprints that capture architectural lineage without weight access. |
 
-**Grounding** — Can we explain what a model knows — and why it's wrong?
+Archived as a completed record — this line continues in [MeasuringAGI](https://github.com/rohanvinaik/MeasuringAGI).
 
-| | |
-|:---|:---|
-| [semantic_probing](https://github.com/rohanvinaik/semantic_probing) | Route queries through 62 universal semantic primitives with Hadamard-guaranteed orthogonality. 100% routing precision. 273us per query. No training required. |
-| [sparse-wiki-grounding](https://github.com/rohanvinaik/sparse-wiki-grounding) | Typed knowledge links with explicit reasoning chains. When an LLM hallucinates, this tells you *why* it's wrong and *who actually did* what it's misattributing. |
-
-**Alignment** — Can we guarantee what a system won't do?
+**Semantic foundations** — the primitives the later systems stand on.
 
 | | |
 |:---|:---|
-| [orthogonal-validators](https://github.com/rohanvinaik/orthogonal-validators) | Standard ensembles have correlated failures. Orthogonal validators use structurally independent decompositions — when all report low confidence, that's signal about inherent ambiguity. **0% error rate** on auto-accepted outputs. |
-| [negative-learning](https://github.com/rohanvinaik/negative-learning) | Minsky's censors and suppressors: learn constraints from failures. **22x more sample-efficient** than positive examples — because "don't touch hot stoves" is smaller than "all safe kitchen behaviors." |
-| [experience-memory](https://github.com/rohanvinaik/experience-memory) | O(1) fix lookup for recurring errors. ~1.6us retrieval. Proactive "dreaming" generates edge cases before deployment. No gradient descent. |
+| [semantic_probing](https://github.com/rohanvinaik/semantic_probing) | 62 universal semantic primitives with Hadamard-exact orthogonality; antonyms at −1.0 by construction. |
+| [sparse-wiki-grounding](https://github.com/rohanvinaik/sparse-wiki-grounding) | Typed knowledge links with explicit reasoning chains — *why* a claim is wrong, not just that it is. |
+| [negative-learning](https://github.com/rohanvinaik/negative-learning) | Minsky's censors: constraints learned from failures, 22× more sample-efficient than positive examples. |
+| [orthogonal-validators](https://github.com/rohanvinaik/orthogonal-validators) | Structurally independent validators — when all report low confidence, that's signal, not noise. |
+| [experience-memory](https://github.com/rohanvinaik/experience-memory) | O(1) fix lookup for recurring errors; no gradient descent. |
+| [semantic_knowledge_graph](https://github.com/rohanvinaik/semantic_knowledge_graph) | Knowledge graphs where position encodes meaning. |
 
-**Applied**
-
-| | |
-|:---|:---|
-| [ShortcutForge](https://github.com/rohanvinaik/ShortcutForge) | Natural language compiler for Apple Shortcuts — describe what you want, get a signed .shortcut binary. Compiler, not prompter. |
-| [GenomeVault](https://github.com/rohanvinaik/GenomeVault) | Privacy-preserving genomics with cryptographic guarantees. Sub-second queries, 128-bit ZK proofs, information-theoretic PIR. 7-layer privacy pipeline from raw genome to encrypted query. |
-| [Yami](https://github.com/rohanvinaik/Yami) | The Wayfinder thesis applied to chess. 6 cheap signals whose interference pattern IS the correct move. Work in progress. |
+**Applied** — [ShortcutForge](https://github.com/rohanvinaik/ShortcutForge): a natural-language compiler for Apple Shortcuts. The LLM is the front-end; the compiler is the reliability.
 
 </details>
 
 <details>
-<summary><b>Foundations</b></summary>
+<summary><b>Foundations (the people)</b></summary>
 <br/>
 
-Kanerva (hyperdimensional computing) · Wierzbicka (semantic primitives) · Minsky (censors, suppressors, K-lines) · Collins & Loftus (spreading activation) · Winston (near-miss learning)
+Kanerva (hyperdimensional computing) · Wierzbicka (semantic primitives) · Minsky (censors, suppressors, K-lines) · Collins & Loftus (spreading activation) · Winston (near-miss learning, story understanding)
 
 </details>
 
 ---
 
-<sub>Independent researcher · Cambridge, MA · Biochemist by training · [RohanV.me](https://www.RohanV.Me) · [rohanpvinaik@gmail.com](mailto:rohanpvinaik@gmail.com)</sub>
+<sub>Independent researcher · Cambridge, MA · biochemist by training · [RohanV.me](https://www.RohanV.Me) · [rohanpvinaik@gmail.com](mailto:rohanpvinaik@gmail.com)</sub>
